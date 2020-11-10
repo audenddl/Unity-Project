@@ -14,6 +14,7 @@ public class PlayerMove : MonoBehaviour
     //기본은 private => 인스펙트 창에 변수가 노출되지 않는다.
     public float speed = 12.0f;
     //public Rigidbody rigid;
+    public Vector3 margin;
 
     //Transform tr;
 
@@ -57,7 +58,7 @@ public class PlayerMove : MonoBehaviour
        // rigid.velocity = new Vector3(xInput, 0f, zInput);
         //2. 플레이어 트랜스폼 포지션 x, y값을 고정시킨다
         transform.Translate(dir * speed * Time.deltaTime);
-        //Vector3 position = transform.position;
+        Vector3 position = transform.position;
         //if (position.x > 9.5f)
         //{
         //    position.x = 9.5f;
@@ -75,22 +76,34 @@ public class PlayerMove : MonoBehaviour
         //    position.z = -9.5f;
         //}
         //transform.position = position;
+        ///////////////////////////////////////////////////////////////////////////////
+        position.x = Mathf.Clamp(position.x, -5f, 5f);
+        position.z = Mathf.Clamp(position.z, -9.5f, 9.5f);
+        transform.position = position;
         //3. 메인카메라의 뷰포트를 가져와서 처리한다.
-        Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+        //Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
 
 
 
-        if (pos.x < 0f) pos.x = 0f;
+        //if (pos.x < 0f) pos.x = 0f;
 
-        if (pos.x > 1f) pos.x = 1f;
+        //if (pos.x > 1f) pos.x = 1f;
 
-        if (pos.y < 0f) pos.y = 0f;
+        //if (pos.y < 0f) pos.y = 0f;
 
-        if (pos.y > 1f) pos.y = 1f;
+        //if (pos.y > 1f) pos.y = 1f;
 
 
 
-        transform.position = Camera.main.ViewportToWorldPoint(pos);
-
+        //transform.position = Camera.main.ViewportToWorldPoint(pos);
+        //스크린좌표 : 모니터해상도 픽셀단위
+        //뷰포트좌표 : 카메라의 사각뿔 끝에 있는 사각형 왼쪽하단(0, 0), 우측상단(1, 1)
+        //UV좌표 : 화면 텍스트, 2D 이미지를 표시하기 위한 좌표게로 텍스쳐좌표계라고도 한다
+        //좌상단(0, 0), 우측하단(1, 1)
+        //미완성
+        //Vector3 position = Camera.main.WorldToViewportPoint(transform.position);
+        //position.x = Mathf.Clamp(position.x, 0.0f + margin.x, 1.0f - margin.x);
+        //position.z = Mathf.Clamp(position.z, 0.0f + margin.z, 1.0f - margin.z);
+        //transform.position = Camera.main.WorldToViewportPoint(position);
     }
 }
