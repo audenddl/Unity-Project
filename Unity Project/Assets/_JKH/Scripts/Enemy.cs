@@ -23,7 +23,6 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "playerBullet")
         {
-            print("adsf");
             Destroy(collision.gameObject);
         }
         Destroy(gameObject);
